@@ -47,5 +47,144 @@ function menu()
     echo "[3] - Primer mes que supera un monto de ventas\n";
     echo "[4] - Información de un mes\n";
     echo "[5] - Juegos más vendidos Ordenados\n";
+    echo "[0] - Salir\n";
     echo "#########################################################\n\n";
+
+    /** Esperamos que ingrese una opcion */
+    fscanf(STDIN, "%d", $op);
+
+    switch ($op) {
+        case 1:
+            echo "#########################################################\n";
+            echo "AGREGAR VENTA\n";
+
+            /* Control de ingreso del mes */
+            do {
+                $mes = readline("Ingrese un mes: ");
+                $indice = mesAIndice($mes);
+
+                $eval = $indice == -1;
+                if ($eval) echo "Valor Incorrecto, debe ingresar un mes correspondiente\n";
+            } while ($eval);
+
+            $juego = readline("Ingrese nombre del juego: ");
+
+            /* Control de ingreso del precio */
+            do {
+                $precio = readline("Ingrese el precio: ");
+
+                $eval = $precio < 0 || !is_numeric($precio);
+                if ($eval) echo "Valor Incorrecto, debe ingresar un numero mayor o igual a 0\n";
+            } while ($eval);
+
+            /* Control de ingreso del precio */
+            do {
+                $cant = readline("Ingrese la cantidad de tickets, valor entero: ");
+
+                $eval = $cant < 0 || !is_numeric($cant);
+                if ($eval) echo "Valor Incorrecto, debe ingresar un numero mayor o igual a 0, no decimal\n";
+            } while ($eval);
+
+            agregarVenta((int) $mes, $juego, $precio, (int) $cant);
+
+            break;
+        case 2:
+            echo 'opcion 2';
+            break;
+        case 3:
+            echo 'opcion 3';
+            break;
+        case 4:
+            echo 'opcion 4';
+            break;
+        case 5:
+            echo 'opcion 5';
+            break;
+        case 0:
+            echo ':)';
+            break;
+
+        default:
+            echo 'No existe la opcion seleccionada\n\n';
+            break;
+    }
+
+    /** Mostramos nuevamente el menu si no selecciono la opcion 0 */
+    if ($op != 0) menu();
+}
+
+/**
+ * 
+ * 
+ * @param String mes The month of the sale.
+ * @param String juego The name of the game.
+ * @param int precio The price of the game.
+ * @param int cantTks The number of tickets sold
+ * 
+ * @return void
+ */
+function agregarVenta(int $mes, String $juego, float $precio, int $cantTks)
+{
+
+    echo "$mes\n";
+    echo "$juego\n";
+    echo "$precio\n";
+    echo "$cantTks\n";
+}
+
+
+/**
+ * 
+ * 
+ * @param String mes The month you want to convert to an index.
+ */
+function mesAIndice(String $mes)
+{
+    $mes = strtolower($mes);
+
+    switch ($mes) {
+        case 'enero':
+            $indice = 0;
+            break;
+        case 'febrero':
+            $indice = 1;
+            break;
+        case 'marzo':
+            $indice = 2;
+            break;
+        case 'abril':
+            $indice = 3;
+            break;
+        case 'mayo':
+            $indice = 4;
+            break;
+        case 'junio':
+            $indice = 5;
+            break;
+        case 'julio':
+            $indice = 6;
+            break;
+        case 'agosto':
+            $indice = 7;
+            break;
+        case 'septiembre':
+            $indice = 8;
+            break;
+        case 'octubre':
+            $indice = 9;
+            break;
+        case 'novimebre':
+            $indice = 10;
+            break;
+        case 'diciembre':
+            $indice = 11;
+            break;
+
+        default:
+            /** Valor incorrecto */
+            $indice = -1;
+            break;
+    }
+
+    return $indice;
 }
