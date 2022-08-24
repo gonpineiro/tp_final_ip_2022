@@ -29,7 +29,6 @@ function precargaJuegosMasVendidos(array $juegos)
     $juegoMasVendido = [];
 
     foreach ($juegos as $juego) {
-        $rand =  rand(49, 120);
         $juegoMasVendido[] = [
             'juego' => $juego['juego'],
             'precioTicket' => $juego['precioTicket'],
