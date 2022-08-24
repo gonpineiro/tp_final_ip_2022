@@ -34,7 +34,6 @@ function precargaJuegosMasVendidos(array $juegos)
             'juego' => $juego['juego'],
             'precioTicket' => $juego['precioTicket'],
             'cantTickets' => rand(49, 120),
-            'total' => $rand * $juego['precioTicket']
         ];
     }
 
