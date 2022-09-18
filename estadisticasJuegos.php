@@ -74,6 +74,27 @@ function menuOpciones(array $juegoMasVendido, array $tickets)
 }
 
 /**
+ * Muestra por pantalla las opciones del menu
+ * 
+ * @return readline | funcion para poder leer los datos del usuario
+ */
+function printOpciones()
+{
+    echo "Ingresa una opcion: \n\n";
+    echo "#########################################################\n";
+    echo "[1] - Ingresar una venta\n";
+    echo "[2] - Mes con mayor monto de ventas\n";
+    echo "[3] - Primer mes que supera un monto de ventas\n";
+    echo "[4] - Información de un mes\n";
+    echo "[5] - Juegos más vendidos Ordenados\n";
+    echo "[0] - Salir\n";
+    echo "#########################################################\n\n";
+
+    /** Esperamos que ingrese una opcion */
+    return readline();
+}
+
+/**
  * Genera una venta
  * 
  * @param int $mes 
@@ -104,106 +125,6 @@ function agregarVenta(int $mes, String $juego, float $precio, int $cantTks, arra
         $juegoMasVendido,
         $tickets,
     ];
-}
-
-/**
- * Muestra por pantalla el detalle completo del mes con mayor ventas
- * 
- * @param array $juegoMasVendido arreglo de juegos mas vendidos
- * @param array $tickets monto total de venta de todos los meses
- * 
- * @return int
- */
-function mesMayorVenta(array $tickets)
-{
-    /* Obtenemos el monto maximo de los tks vendidos */
-    $montoMaximo = max($tickets);
-
-    /* Obtenemos el mes (posicion del arreglo) que corresponde al monto maximo */
-    return array_search($montoMaximo, $tickets);
-}
-
-function informacionMes(array $juegoMasVendido, array $tickets)
-{
-    $mes = solicitarMes();
-    printDetalleMes($mes, $juegoMasVendido, $tickets);
-}
-
-/**
- * Filtra los tickets superirores al monto ingresado, obtenemos el primer elemento, que indica el primer
- * mes con el monto mayor al ingresado.
- * 
- * @param float $monto el monto que se va a comprar
- * @param array $tickets monto total de venta de todos los meses
- * @param array $juegoMasVendido arreglo de juegos mas vendidos
- * 
- * @return int
- */
-function mesSuperaMontoVentas(float $monto, array $tickets)
-{
-    /* Obtenemos todos los de tickets superiores a $monto */
-    $primerMontoMayor = array_filter($tickets, function ($tk) use ($monto) {
-        return $tk > $monto;
-    });
-
-    /* obtemeos el primero elemento de lo filtrado, usamos current porque mantiene los indices, no podemos usar el [0] */
-    $primerMontoMayor = current($primerMontoMayor);
-
-    /* Verificamos que obtuvimos un resultado */
-    if ($primerMontoMayor) {
-        /* Obtenemos el mes en formato numerico */
-        $retorno = array_search($primerMontoMayor, $tickets);
-    } else {
-        $retorno = -1;
-    }
-
-    return $retorno;
-}
-
-/**
- * Imprime los juegos mas vendidos ordenados 
- * en funcion del monto total (precioTicket * cantidadTicket) 
- * de menor a mayor
- * 
- * @param array $juegoMasVendido arreglo de juegos mas vendidos
- * 
- * @return array 
- */
-function masVendidoOrdenado(array $juegoMasVendido)
-{
-    usort($juegoMasVendido, function ($a, $b) {
-        return $a['precioTicket'] * $a['cantTickets'] > $b['precioTicket'] * $b['cantTickets'];
-    });
-
-    return $juegoMasVendido;
-}
-
-/**
- * Muestra por pantalla el detalle completo del mes
- * 
- * @param int $mes 
- * @param array $juegoMasVendido arreglo de juegos mas vendidos
- * @param array $tickets monto total de venta de todos los meses
- * 
- * @return void
- */
-function printDetalleMes(int $mes, array $juegoMayorVentas, array $tickets)
-{
-    $juego = $juegoMayorVentas[$mes]['juego'];
-    $cantTickets = $juegoMayorVentas[$mes]['cantTickets'];
-    $precioTicket = $juegoMayorVentas[$mes]['precioTicket'];
-
-    $montoTotalJuego = $cantTickets * $precioTicket;
-    $mesString = indiceAMes($mes);
-    $montoTotalMes = $tickets[$mes];
-
-    echo "#########################################################\n";
-    echo "<$mesString>\n";
-    echo "Monto total de ventas del mes $mesString: $$montoTotalMes\n";
-    echo "El juego con mayor monto de venta: $juego\n";
-    echo "Numero de Tickets del juego mas vendido: $cantTickets\n";
-    echo "Venta total del juego mas vendido:  $$montoTotalJuego\n";
-    echo "#########################################################\n\n";
 }
 
 /**
@@ -278,6 +199,106 @@ function solicitarMonto()
     } while ($eval);
 
     return $monto;
+}
+
+/**
+ * Muestra por pantalla el detalle completo del mes con mayor ventas
+ * 
+ * @param array $juegoMasVendido arreglo de juegos mas vendidos
+ * @param array $tickets monto total de venta de todos los meses
+ * 
+ * @return int
+ */
+function mesMayorVenta(array $tickets)
+{
+    /* Obtenemos el monto maximo de los tks vendidos */
+    $montoMaximo = max($tickets);
+
+    /* Obtenemos el mes (posicion del arreglo) que corresponde al monto maximo */
+    return array_search($montoMaximo, $tickets);
+}
+
+/**
+ * Filtra los tickets superirores al monto ingresado, obtenemos el primer elemento, que indica el primer
+ * mes con el monto mayor al ingresado.
+ * 
+ * @param float $monto el monto que se va a comprar
+ * @param array $tickets monto total de venta de todos los meses
+ * @param array $juegoMasVendido arreglo de juegos mas vendidos
+ * 
+ * @return int
+ */
+function mesSuperaMontoVentas(float $monto, array $tickets)
+{
+    /* Obtenemos todos los de tickets superiores a $monto */
+    $primerMontoMayor = array_filter($tickets, function ($tk) use ($monto) {
+        return $tk > $monto;
+    });
+
+    /* obtemeos el primero elemento de lo filtrado, usamos current porque mantiene los indices, no podemos usar el [0] */
+    $primerMontoMayor = current($primerMontoMayor);
+
+    /* Verificamos que obtuvimos un resultado */
+    if ($primerMontoMayor) {
+        /* Obtenemos el mes en formato numerico */
+        $retorno = array_search($primerMontoMayor, $tickets);
+    } else {
+        $retorno = -1;
+    }
+
+    return $retorno;
+}
+
+function informacionMes(array $juegoMasVendido, array $tickets)
+{
+    $mes = solicitarMes();
+    printDetalleMes($mes, $juegoMasVendido, $tickets);
+}
+
+/**
+ * Imprime los juegos mas vendidos ordenados 
+ * en funcion del monto total (precioTicket * cantidadTicket) 
+ * de menor a mayor
+ * 
+ * @param array $juegoMasVendido arreglo de juegos mas vendidos
+ * 
+ * @return array 
+ */
+function masVendidoOrdenado(array $juegoMasVendido)
+{
+    usort($juegoMasVendido, function ($a, $b) {
+        return $a['precioTicket'] * $a['cantTickets'] > $b['precioTicket'] * $b['cantTickets'];
+    });
+
+    return $juegoMasVendido;
+}
+
+/**
+ * Muestra por pantalla el detalle completo del mes
+ * 
+ * @param int $mes 
+ * @param array $juegoMasVendido arreglo de juegos mas vendidos
+ * @param array $tickets monto total de venta de todos los meses
+ * 
+ * @return void
+ */
+function printDetalleMes(int $mes, array $juegoMayorVentas, array $tickets)
+{
+    $juego = $juegoMayorVentas[$mes]['juego'];
+    $cantTickets = $juegoMayorVentas[$mes]['cantTickets'];
+    $precioTicket = $juegoMayorVentas[$mes]['precioTicket'];
+
+    $montoTotalJuego = $cantTickets * $precioTicket;
+    $mesString = indiceAMes($mes);
+    $montoTotalMes = $tickets[$mes];
+
+    echo "#########################################################\n";
+    echo "<$mesString>\n";
+    echo "Monto total de ventas del mes $mesString: $$montoTotalMes\n";
+    echo "El juego con mayor monto de venta: $juego\n";
+    echo "Numero de Tickets del juego mas vendido: $cantTickets\n";
+    echo "Venta total del juego mas vendido:  $$montoTotalJuego\n";
+    echo "#########################################################\n\n";
 }
 
 /**
@@ -390,27 +411,6 @@ function indiceAMes(int $mes)
     }
 
     return $string;
-}
-
-/**
- * Muestra por pantalla las opciones del menu
- * 
- * @return readline | funcion para poder leer los datos del usuario
- */
-function printOpciones()
-{
-    echo "Ingresa una opcion: \n\n";
-    echo "#########################################################\n";
-    echo "[1] - Ingresar una venta\n";
-    echo "[2] - Mes con mayor monto de ventas\n";
-    echo "[3] - Primer mes que supera un monto de ventas\n";
-    echo "[4] - Información de un mes\n";
-    echo "[5] - Juegos más vendidos Ordenados\n";
-    echo "[0] - Salir\n";
-    echo "#########################################################\n\n";
-
-    /** Esperamos que ingrese una opcion */
-    return readline();
 }
 
 # FUNCIONES DE INICILIAZACIÓN #
