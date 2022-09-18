@@ -1,63 +1,6 @@
 <?php
 
-/**
- * Genera la estrutura de datos inicial de $juegosMasVendidos.
- * La cantidad de tk la genera con la funcion rand() de php
- * 
- * @param Array $juegos arreglo de juegos.
- * 
- * @return Array listado generado
- */
-function precargaJuegosMasVendidos()
-{
-    /** Listado de juegos dentro del parque con su correspondiente precio actual */
-    $juegos = [
-        ['juego' => 'Autitos Chocadores', 'precioTicket' => 75],
-        ['juego' => 'Montaña Rusa', 'precioTicket' => 110.5],
-        ['juego' => 'Gusano Loco', 'precioTicket' => 42],
-        ['juego' => 'Juego de la tazas', 'precioTicket' => 33],
-        ['juego' => 'Barco Fantasma', 'precioTicket' => 53],
-        ['juego' => 'Montaña de Agua', 'precioTicket' => 78],
-        ['juego' => 'Sillas giratorias', 'precioTicket' => 80.5],
-        ['juego' => 'Auto Loco', 'precioTicket' => 34],
-        ['juego' => 'Cueva del terror', 'precioTicket' => 28],
-        ['juego' => 'Montaña Rusa Invertida', 'precioTicket' => 112.5],
-        ['juego' => 'Teatro', 'precioTicket' => 78.5],
-        ['juego' => 'Karting', 'precioTicket' => 102],
-    ];
-
-    $juegoMasVendido = [];
-
-    foreach ($juegos as $juego) {
-        $juegoMasVendido[] = [
-            'juego' => $juego['juego'],
-            'precioTicket' => $juego['precioTicket'],
-            'cantTickets' => rand(49, 120),
-        ];
-    }
-
-    return $juegoMasVendido;
-}
-
-/**
- * It takes an array of arrays, and returns an array of the product of the values of the 'precioTicket'
- * and 'cantTickets' keys of each sub-array
- * 
- * @param array juegoMasVendido array of arrays, each array has the following keys:
- * 
- * @return array array of the total amount of tickets sold for each game.
- */
-function precargaMontoTotalTks(array $juegoMasVendido)
-{
-    $tickets = [];
-
-    foreach ($juegoMasVendido as $juego) {
-        $tickets[] = $juego['precioTicket'] * $juego['cantTickets'];
-    }
-
-    return $tickets;
-}
-
+/** Inicializacion de variables */
 $juegoMasVendido = precargaJuegosMasVendidos($juegos);
 $tickets = precargaMontoTotalTks($juegoMasVendido);
 
@@ -466,4 +409,64 @@ function printOpciones()
 
     /** Esperamos que ingrese una opcion */
     return readline();
+}
+
+# FUNCIONES DE INICILIAZACIÓN #
+
+/**
+ * Genera la estrutura de datos inicial de $juegosMasVendidos.
+ * La cantidad de tk la genera con la funcion rand() de php
+ * 
+ * @param Array $juegos arreglo de juegos.
+ * 
+ * @return Array listado generado
+ */
+function precargaJuegosMasVendidos()
+{
+    /** Listado de juegos dentro del parque con su correspondiente precio actual */
+    $juegos = [
+        ['juego' => 'Autitos Chocadores', 'precioTicket' => 75],
+        ['juego' => 'Montaña Rusa', 'precioTicket' => 110.5],
+        ['juego' => 'Gusano Loco', 'precioTicket' => 42],
+        ['juego' => 'Juego de la tazas', 'precioTicket' => 33],
+        ['juego' => 'Barco Fantasma', 'precioTicket' => 53],
+        ['juego' => 'Montaña de Agua', 'precioTicket' => 78],
+        ['juego' => 'Sillas giratorias', 'precioTicket' => 80.5],
+        ['juego' => 'Auto Loco', 'precioTicket' => 34],
+        ['juego' => 'Cueva del terror', 'precioTicket' => 28],
+        ['juego' => 'Montaña Rusa Invertida', 'precioTicket' => 112.5],
+        ['juego' => 'Teatro', 'precioTicket' => 78.5],
+        ['juego' => 'Karting', 'precioTicket' => 102],
+    ];
+
+    $juegoMasVendido = [];
+
+    foreach ($juegos as $juego) {
+        $juegoMasVendido[] = [
+            'juego' => $juego['juego'],
+            'precioTicket' => $juego['precioTicket'],
+            'cantTickets' => rand(49, 120),
+        ];
+    }
+
+    return $juegoMasVendido;
+}
+
+/**
+ * It takes an array of arrays, and returns an array of the product of the values of the 'precioTicket'
+ * and 'cantTickets' keys of each sub-array
+ * 
+ * @param array juegoMasVendido array of arrays, each array has the following keys:
+ * 
+ * @return array array of the total amount of tickets sold for each game.
+ */
+function precargaMontoTotalTks(array $juegoMasVendido)
+{
+    $tickets = [];
+
+    foreach ($juegoMasVendido as $juego) {
+        $tickets[] = $juego['precioTicket'] * $juego['cantTickets'];
+    }
+
+    return $tickets;
 }
