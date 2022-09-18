@@ -1,21 +1,5 @@
 <?php
 
-/** Listado de juegos dentro del parque con su correspondiente precio actual */
-$juegos = [
-    ['juego' => 'Autitos Chocadores', 'precioTicket' => 75],
-    ['juego' => 'Montaña Rusa', 'precioTicket' => 110.5],
-    ['juego' => 'Gusano Loco', 'precioTicket' => 42],
-    ['juego' => 'Juego de la tazas', 'precioTicket' => 33],
-    ['juego' => 'Barco Fantasma', 'precioTicket' => 53],
-    ['juego' => 'Montaña de Agua', 'precioTicket' => 78],
-    ['juego' => 'Sillas giratorias', 'precioTicket' => 80.5],
-    ['juego' => 'Auto Loco', 'precioTicket' => 34],
-    ['juego' => 'Cueva del terror', 'precioTicket' => 28],
-    ['juego' => 'Montaña Rusa Invertida', 'precioTicket' => 112.5],
-    ['juego' => 'Teatro', 'precioTicket' => 78.5],
-    ['juego' => 'Karting', 'precioTicket' => 102],
-];
-
 /**
  * Genera la estrutura de datos inicial de $juegosMasVendidos.
  * La cantidad de tk la genera con la funcion rand() de php
@@ -24,8 +8,24 @@ $juegos = [
  * 
  * @return Array listado generado
  */
-function precargaJuegosMasVendidos(array $juegos)
+function precargaJuegosMasVendidos()
 {
+    /** Listado de juegos dentro del parque con su correspondiente precio actual */
+    $juegos = [
+        ['juego' => 'Autitos Chocadores', 'precioTicket' => 75],
+        ['juego' => 'Montaña Rusa', 'precioTicket' => 110.5],
+        ['juego' => 'Gusano Loco', 'precioTicket' => 42],
+        ['juego' => 'Juego de la tazas', 'precioTicket' => 33],
+        ['juego' => 'Barco Fantasma', 'precioTicket' => 53],
+        ['juego' => 'Montaña de Agua', 'precioTicket' => 78],
+        ['juego' => 'Sillas giratorias', 'precioTicket' => 80.5],
+        ['juego' => 'Auto Loco', 'precioTicket' => 34],
+        ['juego' => 'Cueva del terror', 'precioTicket' => 28],
+        ['juego' => 'Montaña Rusa Invertida', 'precioTicket' => 112.5],
+        ['juego' => 'Teatro', 'precioTicket' => 78.5],
+        ['juego' => 'Karting', 'precioTicket' => 102],
+    ];
+
     $juegoMasVendido = [];
 
     foreach ($juegos as $juego) {
